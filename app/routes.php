@@ -27,7 +27,7 @@ Route::get('create', function()
     return 'User Created';
 });
 
-Route::post('login',function()
+Route::post('login', function()
 {
     try
     {
@@ -47,10 +47,28 @@ Route::post('login',function()
     }
 });
 
-Route::group(array('prefix' => 'api/v1', 'before' => 'auth.token'), function() {
+Route::group(array('prefix' => 'api/v1'), function()
+{
+    Route::post('user/login', array(
+        'uses' => 'UserController@login'
+    ));
 
+    Route::resource('user', 'UserController');
+    //Route::post('user', array(
+    //    'uses' => 'UserController@store'
+    //));
+});
+
+
+Route::group(array('prefix' => 'api/v1', 'before' => 'auth.token'), function()
+{
     Route::get('/', function() {
-        return "Protected resource";
+        return Response::json(
+            array(
+                'error'   => true,
+                'message' => 'Protected resource',
+                'code'    => 403
+            )
+        );
     });
-
 });
