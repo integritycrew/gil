@@ -24,9 +24,8 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(function()
-{
-    if($_SERVER["HTTP_HOST"] == 'localhost:8000') {
+$env = $app->detectEnvironment(function() {
+    if(isset($_SERVER["HTTP_HOST"]) && $_SERVER["HTTP_HOST"] == 'localhost:8000') {
         return 'dev';
     }
     return 'production';
