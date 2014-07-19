@@ -7,10 +7,12 @@
 		"laravel/framework": "4.2.*",
         "cartalyst/sentry": "2.1.*",
         "way/generators": "2.*",
-        "barryvdh/laravel-ide-helper": "1.*",
-        "baum/baum": "~1.0",
-        "way/laravel-test-helpers": "dev-master"
+        "baum/baum": "~1.0"
 	},
+    "require-dev": {
+        "barryvdh/laravel-ide-helper": "1.*",
+        "way/laravel-test-helpers": "dev-master"
+    },
 	"autoload": {
 		"classmap": [
 			"app/commands",
