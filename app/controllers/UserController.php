@@ -22,11 +22,8 @@ class UserController extends \BaseController {
         try
         {
             $user = Sentry::authenticate(Input::all(), false);
-
             $token = hash('sha256',Str::random(10),false);
-
             $user->api_token = $token;
-
             $user->save();
 
             return Response::json(array('token' => $token, 'user' => $user->toArray()));
@@ -62,7 +59,7 @@ class UserController extends \BaseController {
 	public function store()
 	{
         $validator = Validator::make(
-            Input::all(),
+            Input::only('email', 'password'),
             array(
                 'email'    => 'required|email|unique:users',
                 'password' => 'required|min:8'
@@ -158,7 +155,7 @@ class UserController extends \BaseController {
             );
         }
 
-        $user = User::where('email', '=', 'test@email.com')->first();
+        $user = User::find($id);
         $email = $user->email;
         $user->delete();
 
