@@ -104,7 +104,7 @@ class OrganizationController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		
 	}
 
 
@@ -116,7 +116,43 @@ class OrganizationController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+        $validator = Validator::make(
+            array('id' => $id),
+            array('id' => 'required|integer')
+        );
+        
+        if ($validator->fails())
+        {
+            return Response::json(
+                array(
+                    'error'   => true,
+                    'message' => $validator->messages(),
+                    'code'    => 400
+                )
+            );
+        }
+        
+        try {
+            $organization = Organization::find($id);
+            $organization_name = $organization->name;
+            $user->delete();
+        } 
+        catch (Exception $e) {
+            return Response::json(array(
+                'error' => true,
+                'message' => $e->getMessage(),
+                'status' => 404
+            ));
+        }
+        
+        return Response::json(
+            array(
+                'error'   => false,
+                'message' => 'Organization '.$organization_name.' was deleted',
+                'code'    => 200
+            )
+        );
+        
 	}
 
 
