@@ -36,7 +36,7 @@ class OrganizationController extends \BaseController {
             Return Response::json(array(
                 'error' => true,
                 'message' => "Login required",
-                'status' => "401"
+                'status' => 401
             ));
         } else {
             $user = Sentry::getUser();
@@ -53,10 +53,21 @@ class OrganizationController extends \BaseController {
             return Response::json(array(
                 'error' => true,
                 'message' => $validator->messages(),
-                'status' => '403'
+                'status' => 403
             ));
         }
         
+        try {
+            Organization::create(Input::only('name'));
+        } 
+        catch (Exception $e) {
+            
+            return Response::json(array(
+                'error' => true,
+                'message' => $e->getMessage(),
+                'status' => 404
+            ));
+        }
         
 	}
 
